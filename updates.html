@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updates — Sissokassem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120c1e;
+    --bg-alt: #170f28;
+    --surface: #1e1636;
+    --surface-hi: #271d45;
+    --border: #352a58;
+    --text: #e9e4f7;
+    --text-muted: #9587bd;
+    --text-dim: #6c5f96;
+    --accent: #a78bfa;
+    --accent-bright: #d8c9ff;
+    --green: #7ee787;
+    --pink: #f0a8e0;
+    --yellow: #ffd479;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --sidebar-w: 232px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(167,139,250,0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 20%, rgba(240,168,224,0.06), transparent);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+
+  /* SIDEBAR (shared) */
+  .sidebar{
+    position: fixed; top:0; left:0; height:100vh; width: var(--sidebar-w);
+    background: var(--bg-alt); border-right: 1px solid var(--border);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding: 26px 22px; z-index: 100;
+  }
+  .sb-top .logo{
+    font-family: var(--mono); font-weight:700; font-size: 1rem;
+    color: var(--accent-bright);
+    display:flex; align-items:center; gap:8px; margin-bottom: 6px;
+  }
+  .logo .cursor-blip{
+    width:8px; height:8px; background: var(--green); border-radius:50%;
+    box-shadow: 0 0 8px var(--green); flex-shrink:0;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+  .sb-tagline{
+    font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim);
+    margin-bottom: 34px; padding-left: 16px;
+  }
+
+  .sb-nav{ display:flex; flex-direction:column; gap: 4px; }
+  .sb-nav a{
+    font-family: var(--mono); font-size: 0.86rem; color: var(--text-muted);
+    padding: 9px 12px; border-radius: 6px; transition: all .15s;
+    display:flex; align-items:center; gap:10px;
+  }
+  .sb-nav a .bullet{ color: var(--text-dim); }
+  .sb-nav a:hover{ background: var(--surface); color: var(--accent-bright); }
+  .sb-nav a.active{ background: var(--surface-hi); color: var(--accent-bright); font-weight:600; }
+  .sb-nav a.active .bullet{ color: var(--green); }
+
+  .sb-bottom{ display:flex; flex-direction:column; gap: 14px; }
+  .sb-status{
+    font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim);
+    display:flex; align-items:center; gap:7px; padding-left: 12px;
+  }
+  .sb-status .dot{ width:6px; height:6px; border-radius:50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .sb-socials{ display:flex; gap: 14px; padding-left: 12px; flex-wrap: wrap; }
+  .sb-socials a{ font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); }
+  .sb-socials a:hover{ color: var(--accent-bright); }
+
+  .mobile-topbar{ display:none; }
+
+  .main{ margin-left: var(--sidebar-w); min-height: 100vh; }
+
+  /* PAGE HEAD */
+  .page-head{ padding: 70px 0 40px; border-bottom: 1px solid var(--border); }
+  .eyebrow{
+    font-family: var(--mono); font-size:0.8rem; color: var(--green);
+    letter-spacing: 0.06em; margin-bottom: 14px; display:block;
+  }
+  .page-head h1{
+    font-family: var(--mono); font-weight: 800;
+    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    margin-bottom: 14px;
+  }
+  .page-head p{ color: var(--text-muted); max-width: 56ch; }
+
+  /* FILTER BAR */
+  .filter-bar{
+    display:flex; gap:10px; flex-wrap:wrap; padding: 26px 0 6px;
+  }
+  .filter-pill{
+    font-family: var(--mono); font-size: 0.76rem; padding: 6px 13px; border-radius: 20px;
+    border: 1px solid var(--border); color: var(--text-muted); cursor:pointer; transition: all .15s;
+    background: transparent;
+  }
+  .filter-pill:hover{ border-color: var(--accent); color: var(--accent-bright); }
+  .filter-pill.active{ background: var(--accent); border-color: var(--accent); color: #120c1e; font-weight:600; }
+
+  /* TIMELINE */
+  .timeline{ position: relative; padding: 40px 0 80px; }
+  .timeline::before{
+    content:""; position:absolute; left: 7px; top: 8px; bottom: 8px; width: 1px;
+    background: var(--border);
+  }
+  .entry{
+    position: relative; padding-left: 40px; margin-bottom: 34px;
+  }
+  .entry:last-child{ margin-bottom: 0; }
+  .entry-dot{
+    position:absolute; left:0; top: 6px; width: 15px; height:15px; border-radius:50%;
+    background: var(--bg-alt); border: 2px solid var(--accent);
+  }
+  .entry-dot.fix{ border-color: var(--pink); }
+  .entry-dot.feature{ border-color: var(--green); }
+  .entry-dot.release{ border-color: var(--yellow); }
+
+  .entry-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 22px; transition: border-color .2s;
+  }
+  .entry-card:hover{ border-color: var(--accent); }
+
+  .entry-meta{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom: 8px;
+    font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim);
+  }
+  .entry-date{ color: var(--text-dim); }
+  .entry-tag{
+    padding: 2px 9px; border-radius: 5px; border: 1px solid var(--border);
+    text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.68rem;
+  }
+  .entry-tag.fix{ color: var(--pink); border-color: var(--pink); }
+  .entry-tag.feature{ color: var(--green); border-color: var(--green); }
+  .entry-tag.release{ color: var(--yellow); border-color: var(--yellow); }
+
+  .entry-card h3{
+    font-family: var(--mono); font-size: 1.02rem; color: var(--text); margin-bottom: 8px;
+  }
+  .entry-card h3 .version{ color: var(--accent-bright); font-weight: 700; }
+  .entry-card p{ color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+  .entry-link{ font-family: var(--mono); font-size: 0.8rem; color: var(--accent-bright); }
+  .entry-link:hover{ text-decoration: underline; }
+
+  footer{
+    text-align:center; padding: 30px 0 40px; color: var(--text-dim);
+    font-family: var(--mono); font-size: 0.78rem; border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 900px){
+    :root{ --sidebar-w: 0px; }
+    .sidebar{ display:none; }
+    .main{ margin-left: 0; }
+    .mobile-topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      position: sticky; top:0; z-index: 90;
+      background: rgba(18,12,30,0.9); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+    }
+    .mobile-topbar .logo{
+      font-family: var(--mono); font-weight:700; font-size: 0.95rem; color: var(--accent-bright);
+      display:flex; align-items:center; gap:8px;
+    }
+    .mobile-topbar nav{ display:flex; gap: 16px; font-family: var(--mono); font-size: 0.78rem; }
+    .mobile-topbar nav a{ color: var(--text-muted); }
+    .mobile-topbar nav a.active{ color: var(--accent-bright); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor-blip{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-top">
+    <div class="logo"><span class="cursor-blip"></span>sissokassem</div>
+    <div class="sb-tagline">// bedrock developer</div>
+    <nav class="sb-nav">
+      <a href="index.html"><span class="bullet">▸</span>home</a>
+      <a href="index.html#about"><span class="bullet">▸</span>about</a>
+      <a href="index.html#projects"><span class="bullet">▸</span>projects</a>
+      <a href="index.html#skills"><span class="bullet">▸</span>skills</a>
+      <a href="updates.html" class="active"><span class="bullet">▸</span>updates</a>
+      <a href="index.html#contact"><span class="bullet">▸</span>contact</a>
+    </nav>
+  </div>
+  <div class="sb-bottom">
+    <div class="sb-status"><span class="dot"></span>available for work</div>
+    <div class="sb-socials">
+      <a href="https://github.com/Sissokassem">github</a>
+      <a href="https://discord.com/invite/9zmhWZ9FX2">discord</a>
+      <a href="https://ko-fi.com/sissokassem">ko-fi</a>
+    </div>
+  </div>
+</aside>
+
+<div class="mobile-topbar">
+  <div class="logo"><span class="cursor-blip"></span>sissokassem</div>
+  <nav>
+    <a href="index.html">home</a>
+    <a href="index.html#projects">projects</a>
+    <a href="updates.html" class="active">updates</a>
+    <a href="index.html#contact">contact</a>
+  </nav>
+</div>
+
+<div class="main">
+
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">// changelog</span>
+      <h1>Updates &amp; releases</h1>
+      <p>A running log of new addon releases, hotfixes, and version bumps across everything I ship for Minecraft Bedrock.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="filter-bar">
+      <button class="filter-pill active" data-filter="all">all</button>
+      <button class="filter-pill" data-filter="release">releases</button>
+      <button class="filter-pill" data-filter="feature">features</button>
+      <button class="filter-pill" data-filter="fix">fixes</button>
+    </div>
+
+    <div class="timeline" id="timeline">
+
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">Feb 1, 2026</span>
+            <span class="entry-tag release">release</span>
+          </div>
+          <h3>Java-like Ender Pearls <span class="version">v1.5.2</span></h3>
+          <p>Latest stable build — keeps chunk loading, 8-block stasis chamber compatibility, and air/water drag in sync with recent Bedrock game updates. No experimental toggles required.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/scripts/java-like-ender-pearls">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="fix">
+        <div class="entry-dot fix"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">Nov 20, 2025</span>
+            <span class="entry-tag fix">hotfix</span>
+          </div>
+          <h3>UltraVanish <span class="version">V4.1</span></h3>
+          <p>Hotfix release for the vanish add-on. Cleans up edge cases around the <code>/online</code> replacement command and full-vanish state syncing between sessions.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/addons/ultravanish">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="feature">
+        <div class="entry-dot feature"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">Sep 10, 2025</span>
+            <span class="entry-tag feature">update</span>
+          </div>
+          <h3>Heavy Piglins Bartering++ <span class="version">v1.5</span></h3>
+          <p>Rebalanced trading — gold blocks now barter better loot while gold ingots yield intentionally worse loot, giving survival players a clearer risk/reward choice.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/addons/heavy-piglins-bartering">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">Jul 28, 2025</span>
+            <span class="entry-tag release">new release</span>
+          </div>
+          <h3>All Entities Solid Addon</h3>
+          <p>First release. Makes almost every entity in the world physically solid — stand on mobs, stack players, or build towers out of whatever's nearby. Requires Experimental Settings enabled.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/addons/all-entities-solid">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">Jul 8, 2025</span>
+            <span class="entry-tag release">update</span>
+          </div>
+          <h3>No Quit Button <span class="version">v1.5</span></h3>
+          <p>Refreshed build of the resource pack that replaces the save-and-quit flow. No experiments needed to run it — still built purely for harmless trolling potential.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/texture-packs/no-quit-button">View on CurseForge →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>© 2026 Sissokassem — built with HTML &amp; CSS, no framework required.</footer>
+
+</div>
+
+<script>
+  const pills = document.querySelectorAll('.filter-pill');
+  const entries = document.querySelectorAll('.entry');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const filter = pill.dataset.filter;
+      entries.forEach(entry => {
+        entry.style.display = (filter === 'all' || entry.dataset.type === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
