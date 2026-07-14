@@ -136,8 +136,8 @@
     background: var(--bg-alt); border: 2px solid var(--accent);
   }
   .entry-dot.fix{ border-color: var(--pink); }
-  .entry-dot.feature{ border-color: var(--green); }
-  .entry-dot.release{ border-color: var(--yellow); }
+  .entry-dot.beta{ border-color: var(--yellow); }
+  .entry-dot.release{ border-color: var(--green); }
 
   .entry-card{
     background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
@@ -155,8 +155,8 @@
     text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.68rem;
   }
   .entry-tag.fix{ color: var(--pink); border-color: var(--pink); }
-  .entry-tag.feature{ color: var(--green); border-color: var(--green); }
-  .entry-tag.release{ color: var(--yellow); border-color: var(--yellow); }
+  .entry-tag.beta{ color: var(--yellow); border-color: var(--yellow); }
+  .entry-tag.release{ color: var(--green); border-color: var(--green); }
 
   .entry-card h3{
     font-family: var(--mono); font-size: 1.02rem; color: var(--text); margin-bottom: 8px;
@@ -245,7 +245,7 @@
     <div class="filter-bar">
       <button class="filter-pill active" data-filter="all">all</button>
       <button class="filter-pill" data-filter="release">releases</button>
-      <button class="filter-pill" data-filter="feature">features</button>
+      <button class="filter-pill" data-filter="beta">betas</button>
       <button class="filter-pill" data-filter="fix">fixes</button>
     </div>
 
@@ -255,11 +255,64 @@
         <div class="entry-dot release"></div>
         <div class="entry-card">
           <div class="entry-meta">
+            <span class="entry-date">jul 13, 2026</span>
+            <span class="entry-tag release">release</span>
+          </div>
+          <h3>No Quit Button <span class="version">v5.0</span></h3>
+          <p>added support for new versions.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/texture-packs/no-quit-button">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">jul 12, 2026</span>
+            <span class="entry-tag release">release</span>
+          </div>
+          <h3>UltraVanish <span class="version">v5.0</span></h3>
+          <p>added better support for newer versions of minecraft and fixed bugs regarding empty chat boxes.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/addons/ultravanish">View on CurseForge →</a>
+        </div>
+      </div>
+
+
+       <div class="entry" data-type="beta">
+        <div class="entry-dot beta"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">jul 12, 2026</span>
+            <span class="entry-tag beta">beta</span>
+          </div>
+          <h3>Java-like Ender Pearls <span class="version">v1.7.9</span></h3>
+          <p>added experimental mob spawning (v1.8.0 recommended).</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/scripts/java-like-ender-pearls">View on CurseForge →</a>
+        </div>
+      </div>
+
+       <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
+            <span class="entry-date">jul 12, 2026</span>
+            <span class="entry-tag release">release</span>
+          </div>
+          <h3>Java-like Ender Pearls <span class="version">v1.8.0</span></h3>
+          <p>increased compatibility with newer Minecraft versions and fixed inertia bugs.</p>
+          <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/scripts/java-like-ender-pearls">View on CurseForge →</a>
+        </div>
+      </div>
+
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
+        <div class="entry-card">
+          <div class="entry-meta">
             <span class="entry-date">Feb 1, 2026</span>
             <span class="entry-tag release">release</span>
           </div>
           <h3>Java-like Ender Pearls <span class="version">v1.5.2</span></h3>
-          <p>Latest stable build — keeps chunk loading, 8-block stasis chamber compatibility, and air/water drag in sync with recent Bedrock game updates. No experimental toggles required.</p>
+          <p>Made achievement friendly.</p>
           <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/scripts/java-like-ender-pearls">View on CurseForge →</a>
         </div>
       </div>
@@ -271,18 +324,18 @@
             <span class="entry-date">Nov 20, 2025</span>
             <span class="entry-tag fix">hotfix</span>
           </div>
-          <h3>UltraVanish <span class="version">V4.1</span></h3>
-          <p>Hotfix release for the vanish add-on. Cleans up edge cases around the <code>/online</code> replacement command and full-vanish state syncing between sessions.</p>
+          <h3>UltraVanish <span class="version">v4.1</span></h3>
+          <p>Hotfix for permission errors on servers.</p>
           <a class="entry-link" href="https://www.curseforge.com/minecraft-bedrock/addons/ultravanish">View on CurseForge →</a>
         </div>
       </div>
 
-      <div class="entry" data-type="feature">
-        <div class="entry-dot feature"></div>
+      <div class="entry" data-type="release">
+        <div class="entry-dot release"></div>
         <div class="entry-card">
           <div class="entry-meta">
             <span class="entry-date">Sep 10, 2025</span>
-            <span class="entry-tag feature">update</span>
+            <span class="entry-tag release">release</span>
           </div>
           <h3>Heavy Piglins Bartering++ <span class="version">v1.5</span></h3>
           <p>Rebalanced trading — gold blocks now barter better loot while gold ingots yield intentionally worse loot, giving survival players a clearer risk/reward choice.</p>
@@ -295,7 +348,7 @@
         <div class="entry-card">
           <div class="entry-meta">
             <span class="entry-date">Jul 28, 2025</span>
-            <span class="entry-tag release">new release</span>
+            <span class="entry-tag release">release</span>
           </div>
           <h3>All Entities Solid Addon</h3>
           <p>First release. Makes almost every entity in the world physically solid — stand on mobs, stack players, or build towers out of whatever's nearby. Requires Experimental Settings enabled.</p>
@@ -308,7 +361,7 @@
         <div class="entry-card">
           <div class="entry-meta">
             <span class="entry-date">Jul 8, 2025</span>
-            <span class="entry-tag release">update</span>
+            <span class="entry-tag release">release</span>
           </div>
           <h3>No Quit Button <span class="version">v1.5</span></h3>
           <p>Refreshed build of the resource pack that replaces the save-and-quit flow. No experiments needed to run it — still built purely for harmless trolling potential.</p>
