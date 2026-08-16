@@ -71,6 +71,26 @@
     border-bottom-color: transparent;
   }
 
+    .mobile-topbar {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100%; height: 56px;
+    background: var(--bg-alt); border-bottom: 1px solid var(--border);
+    padding: 0 20px; z-index: 200; align-items: center; justify-content: space-between;
+  }
+  .mobile-topbar .logo { font-family: var(--mono); font-weight:700; font-size: 0.95rem; color: var(--accent-bright); display:flex; align-items:center; gap:8px; }
+  .mobile-menu-btn { background: none; border: none; color: var(--text); font-family: var(--mono); font-size: 1.1rem; cursor: pointer; padding: 4px; }
+  
+  /* MOBILE OVERLAY MENU */
+  .mobile-nav-overlay {
+    display: none; position: fixed; top: 56px; left: 0; width: 100%; height: calc(100vh - 56px);
+    background: var(--bg); padding: 24px; z-index: 190; flex-direction: column; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-nav-overlay a { font-family: var(--mono); font-size: 1rem; color: var(--text-muted); padding: 12px; border-radius: 6px; display: block; }
+  .mobile-nav-overlay a:hover { background: var(--surface); color: var(--accent-bright); }
+  .mobile-nav-overlay a.active { background: var(--surface-hi); color: var(--accent-bright); font-weight: 600; }
+
+
   .item-row { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   .item-row:last-child { border-bottom: none; }
   .item-meta h3 { font-family: var(--mono); font-size: 1.1rem; color: var(--text); margin-bottom: 4px; }
@@ -83,25 +103,52 @@
   /* DOWNLOAD BUTTON */
   .dl-btn { font-family: var(--mono); font-size: 0.85rem; padding: 8px 16px; background: var(--bg); border: 1px solid var(--border); color: var(--accent); border-radius: 6px; transition: all 0.2s; }
   .dl-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); transform: translateY(-1px); }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .mobile-topbar { display: flex; }
+    .main { margin-left: 0; padding-top: 86px; }
+    .panel-matrix-container { grid-template-columns: 1fr; }
+    body.menu-active .mobile-nav-overlay { display: flex; }
+}
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
-  <div class="sb-top">
-    <div class="logo"></span><span class="cursor-blip"></span>sissokassem</div>
-    <div class="sb-tagline">// bedrock developer</div>
-    <nav class="sb-nav">
-      <a href="#top"><span class="bullet">▸</span>home</a>
-      <a href="#about"><span class="bullet">▸</span>about</a>
-      <a href="#projects"><span class="bullet">▸</span>projects</a>
-      <a href="#skills"><span class="bullet">▸</span>skills</a>
-      <a href="#contact"><span class="bullet">▸</span>contact</a>
-      <a href="updates.html"><span class="bullet">▸</span>updates</a>
-      <a href="archives.html"><span class="bullet">▸</span>archives</a>
-    </nav>
-  </div>
-</aside>
+  <!-- MOBILE NAVIGATION TOPBAR BAR -->
+  <header class="mobile-topbar">
+    <div class="logo"><span class="cursor-blip"></span>sissokassem</div>
+    <button class="mobile-menu-btn" id="menuToggle">[ menu ]</button>
+  </header>
+
+  <!-- MOBILE NAV WINDOW DROPDOWN OVERLAY -->
+  <nav class="mobile-nav-overlay" id="mobileMenu">
+    <a href="index.html#top">▸ home</a>
+    <a href="index.html#about">▸ about</a>
+    <a href="index.html#projects">▸ projects</a>
+    <a href="index.html#skills">▸ skills</a>
+    <a href="index.html#contact">▸ contact</a>
+    <a href="updates.html">▸ updates</a>
+    <a href="archives.html" class="active">▸ archives</a>
+  </nav>
+
+  <!-- DESKTOP FIXED SIDEBAR PANEL FRAME -->
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div class="logo"><span class="cursor-blip"></span>sissokassem</div>
+      <div class="sb-tagline">// bedrock developer</div>
+      <nav class="sb-nav">
+        <a href="index.html#top"><span class="bullet">▸</span>home</a>
+        <a href="index.html#about"><span class="bullet">▸</span>about</a>
+        <a href="index.html#projects"><span class="bullet">▸</span>projects</a>
+        <a href="index.html#skills"><span class="bullet">▸</span>skills</a>
+        <a href="index.html#contact"><span class="bullet">▸</span>contact</a>
+        <a href="updates.html"><span class="bullet">▸</span>updates</a>
+        <a href="archives.html" class="active"><span class="bullet">▸</span>archives</a>
+      </nav>
+    </div>
+  </aside>
+
 
   <!-- ARCHIVE SUBWEB BODY -->
   <div class="main">
@@ -230,3 +277,12 @@ Now works on server Wich can't enable beta APIs.</p>
       </div>
 </body>
 </html>
+<div class="mobile-topbar">
+  <div class="logo"></span><span class="cursor-blip"><a href="index.html"></a></span>sissokassem</div>
+  <nav>
+
+    <a href="#projects">projects</a>
+    <a href="updates.html">updates</a>
+    <a href="archives.html">archives</a>
+  </nav>
+</div>
