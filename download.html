@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sissokassem — Processing Download</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120c1e; --bg-alt: #170f28; --surface: #1e1636; --surface-hi: #271d45;
+    --border: #352a58; --text: #e9e4f7; --text-muted: #9587bd; --text-dim: #6c5f96;
+    --accent: #a78bfa; --accent-bright: #d8c9ff; --green: #7ee787; --pink: #f0a8e0;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    background: var(--bg); color: var(--text); font-family: var(--mono); padding: 80px 20px;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(167,139,250,0.15), transparent);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;
+  }
+  
+  .terminal-box { width: 100%; max-width: 680px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.45); }
+  .terminal-header { display: flex; align-items: center; padding: 12px 16px; background: var(--surface-hi); border-bottom: 1px solid var(--border); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .terminal-title { margin-left: 8px; font-size: 0.78rem; color: var(--text-dim); }
+  .terminal-content { padding: 24px; font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; }
+  
+  /* MONETIZATION / AD BANNER WRAPPER */
+  .ad-frame { width: 100%; max-width: 468px; height: 60px; background: var(--bg-alt); border: 1px dashed var(--border); margin: 24px auto; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--text-dim); border-radius: 6px; }
+  
+  .kw { color: var(--pink); } .str { color: var(--green); } .fn { color: var(--accent-bright); }
+  .action-btn { display: none; font-family: var(--mono); margin-top: 15px; padding: 10px 20px; font-size: 0.85rem; background: var(--accent); color: #120c1e; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: background 0.2s; }
+  .action-btn:hover { background: var(--accent-bright); }
+</style>
+</head>
+<body>
+
+  <div class="terminal-box">
+    <div class="terminal-header">
+      <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+      <div class="terminal-title">bash — file_fetcher.sh</div>
+    </div>
+    <div class="terminal-content">
+      <p><span class="ln">&gt;</span> <span class="kw">initializing</span> payload resolver stream...</p>
+      <p id="target-log"><span class="ln">&gt;</span> target: <span class="str">fetching...</span></p>
+      <p id="timer-output"><span class="ln">&gt;</span> holding socket connection open for <span class="kw">10s</span> (advertisement handshake verification)...</p>
+      
+      <!-- AD BLOCK ZONE -->
+      <div class="ad-frame">
+         <!-- Paste Ad Provider Script Code (Google AdSense, Monetag, etc.) here -->
+         [ ADVERTISEMENT STREAM INSIDE RETRIEVAL TUNNEL ]
+      </div>
+
+      <a id="fallback-btn" class="action-btn" href="#">[ execute_download_fallback ]</a>
+    </div>
+  </div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetFile = urlParams.get('file');
+
+  if (!targetFile) {
+      document.getElementById('target-log').innerHTML = `<span class="ln">&gt;</span> <span class="kw">Error:</span> critical routing validation failed. No file parameter parsed.`;
+      document.getElementById('timer-output').style.display = 'none';
+  } else {
+      document.getElementById('target-log').innerHTML = `<span class="ln">&gt;</span> target stream: <span class="str">"/downloads/${targetFile}"</span>`;
+      
+      let countdown = 10;
+      const timerText = document.getElementById('timer-output');
+      const actionButton = document.getElementById('fallback-btn');
+      const fileEndpoint = "downloads/" + targetFile;
+
+      const queue = setInterval(() => {
+          countdown--;
+          timerText.innerHTML = `<span class="ln">&gt;</span> holding socket connection open for <span class="kw">${countdown}s</span> (advertisement handshake verification)...`;
+          
+          if(countdown <= 0) {
+              clearInterval(queue);
+              timerText.innerHTML = `<span class="ln">&gt;</span> connection ready. status: <span class="fn">200 OK</span>. binary payload piped to window.`;
+              
+              // Direct download stream initialization
+              actionButton.href = fileEndpoint;
+              actionButton.style.display = 'inline-block';
+              window.location.href = fileEndpoint;
+          }
+      }, 1000);
+  }
+</script>
+</body>
+</html>
